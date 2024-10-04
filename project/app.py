@@ -91,6 +91,14 @@ def search():
         return render_template('search.html', entries=entries, query=query)
     return render_template('search.html')
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            flash('Please log in.')
+            return jsonify({'status': 0, 'message': 'Please log in.'}), 401
+        return f(*args, **kwargs)
+    return decorated_function
 
 if __name__ == "__main__":
     app.run()
