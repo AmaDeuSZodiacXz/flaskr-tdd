@@ -3,6 +3,7 @@ import pytest
 from pathlib import Path
 
 from project.app import app, init_db
+import json
 
 TEST_DB = "test.db"
 
