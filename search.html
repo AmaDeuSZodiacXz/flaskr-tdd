@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Flaskr</title>
+    <title>Flaskr-TDD</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -11,36 +11,37 @@
   <body>
     <div class="container">
       <br /><br />
-      <h1>Flaskr</h1>
+      <h1>Flaskr-TDD</h1>
       <br /><br />
 
       <a class="btn btn-primary" role="button" href="{{ url_for('index') }}">
         Home
       </a>
 
-      {% if not session.logged_in %}
-      <a class="btn btn-success" role="button" href="{{ url_for('login') }}"
-        >log in</a
-      >
+      {% if not session.get('logged_in') %}
+      <a class="btn btn-success" role="button" href="{{ url_for('login') }}">
+        log in
+      </a>
       {% else %}
-      <a class="btn btn-warning" role="button" href="{{ url_for('logout') }}"
-        >log out</a
-      >
+      <a class="btn btn-warning" role="button" href="{{ url_for('logout') }}">
+        log out
+      </a>
       {% endif %}
 
       <br /><br />
 
       {% for message in get_flashed_messages() %}
-      <div class="flash alert alert-success col-sm-4" role="success">
+      <div class="flash alert alert-success col-sm-4" role="alert">
         {{ message }}
       </div>
       {% endfor %}
 
-      <form action="{{ url_for('search') }}" method="get" class="from-group">
+      <!-- Search Form -->
+      <form action="{{ url_for('search') }}" method="get" class="form-group">
         <dl>
           <dt>Search:</dt>
           <dd>
-            <input type="text" name="query" class="form-control col-sm-4" />
+            <input type="text" name="query" class="form-control col-sm-4" placeholder="Enter search term" />
           </dd>
           <br />
           <dd><input type="submit" class="btn btn-info" value="Search" /></dd>
@@ -48,18 +49,23 @@
       </form>
 
       <ul class="entries">
-        {% for entry in entries %} {% if query.lower() in entry.title.lower() or
-        query.lower() in entry.text.lower() %}
-        <li class="entry">
-          <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
-          {{ entry.text|safe }}
-        </li>
-        {% endif %} {% endfor %}
+        {% if entries and query %}
+          {% for entry in entries %}
+            {% if query.lower() in entry.title.lower() or query.lower() in entry.text.lower() %}
+            <li class="entry">
+              <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
+              {{ entry.text|safe }}
+            </li>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <li>No matching entries found.</li>
+        {% endif %}
       </ul>
     </div>
     <script
       type="text/javascript"
-      src="{{url_for('static', filename='main.js') }}"
+      src="{{ url_for('static', filename='main.js') }}"
     ></script>
   </body>
 </html>
