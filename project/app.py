@@ -3,7 +3,11 @@ import sqlite3
 from flask import Flask, g, render_template
 
 # configuration
+# configuration
 DATABASE = "flaskr.db"
+USERNAME = "admin"
+PASSWORD = "admin"
+SECRET_KEY = "change_me"
 
 # create and initialize a new Flask app
 app = Flask(__name__)
