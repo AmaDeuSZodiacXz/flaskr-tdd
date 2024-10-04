@@ -9,13 +9,25 @@ from functools import wraps
 
 basedir = Path(__file__).resolve().parent
 
-# configuration
+import os
+from pathlib import Path
+
+# Configuration
 DATABASE = "flaskr.db"
 USERNAME = "admin"
 PASSWORD = "admin"
 SECRET_KEY = "change_me"
-SQLALCHEMY_DATABASE_URI = f'sqlite:///{Path(basedir).joinpath(DATABASE)}'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# Get the DATABASE_URL from the environment, fallback to SQLite if not set
+url = os.getenv('DATABASE_URL', f'sqlite:///{Path(basedir).joinpath(DATABASE)}')
+
+# Replace 'postgres://' with 'postgresql://' for SQLAlchemy compatibility
+if url.startswith("postgres://"):
+    url = url.replace("postgres://", "postgresql://", 1)
+
+# Set SQLAlchemy Database URI
+SQLALCHEMY_DATABASE_URI = url
+
 
 
 # create and initialize a new Flask app
