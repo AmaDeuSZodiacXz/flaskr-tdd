@@ -45,6 +45,7 @@ def test_database(client):
     tester = Path("test.db").is_file()
     assert tester
 
+#
 
 def test_empty_db(client):
     """Ensure database is blank"""
