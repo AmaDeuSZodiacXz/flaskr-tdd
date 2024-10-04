@@ -2,7 +2,7 @@ import os
 import pytest
 from pathlib import Path
 
-from project.app import app, init_db
+from project.app import app, db
 import json
 
 TEST_DB = "test.db"
