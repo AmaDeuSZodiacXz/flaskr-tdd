@@ -83,13 +83,12 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/search/', methods=['GET'])
+@app.route('/search', methods=['GET'])
 def search():
     query = request.args.get("query")
-    entries = db.session.query(models.Post).all()  # Get all posts
-    if query:
-        return render_template('search.html', entries=entries, query=query)
-    return render_template('search.html', entries=entries)
+    entries = db.session.query(models.Post).all()
+    return render_template('search.html', entries=entries, query=query)
+
 
 def login_required(f):
     @wraps(f)
