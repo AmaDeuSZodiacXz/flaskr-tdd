@@ -1,13 +1,21 @@
-import sqlite3
+import os
+from functools import wraps
 from pathlib import Path
 
-from flask import Flask, g, render_template, request, session, \
-                  flash, redirect, url_for, abort, jsonify
+from flask import (
+    Flask,
+    render_template,
+    request,
+    session,
+    flash,
+    redirect,
+    url_for,
+    abort,
+    jsonify,
+)
 from flask_sqlalchemy import SQLAlchemy
 
-from functools import wraps
 
-import os
 basedir = Path(__file__).resolve().parent
 
 # configuration
@@ -22,6 +30,7 @@ if url.startswith("postgres://"):
 
 SQLALCHEMY_DATABASE_URI = url
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 
 # create and initialize a new Flask app
 app = Flask(__name__)
