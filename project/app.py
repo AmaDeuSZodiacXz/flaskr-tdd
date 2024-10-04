@@ -83,19 +83,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/delete/<int:post_id>', methods=['GET'])
-def delete_entry(post_id):
-    """Deletes post from database."""
-    result = {'status': 0, 'message': 'Error'}
-    try:
-        db.session.query(models.Post).filter_by(id=post_id).delete()
-        db.session.commit()
-        result = {'status': 1, 'message': "Post Deleted"}
-        flash('The entry was deleted.')
-    except Exception as e:
-        result = {'status': 0, 'message': repr(e)}
-    return jsonify(result)
-
 @app.route('/search/', methods=['GET'])
 def search():
     query = request.args.get("query")
