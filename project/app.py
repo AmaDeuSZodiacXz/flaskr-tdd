@@ -1,6 +1,6 @@
 from flask import Flask
 import sqlite3
-from flask import Flask, g
+from flask import Flask, g, render_template
 
 # configuration
 DATABASE = "flaskr.db"
